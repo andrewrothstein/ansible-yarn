@@ -1,0 +1,5 @@
+---
+# defaults file for yarn
+yarn_ver: '1.0.2'
+yarn_mirror: https://yarnpkg.com/downloads
+yarn_parent_install_dir: /usr/local

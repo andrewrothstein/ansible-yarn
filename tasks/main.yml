@@ -1,0 +1,42 @@
+---
+- name: resolve platform specific vars
+  include_vars: '{{item}}'
+  with_first_found:
+    - files:
+        - '{{ansible_distribution}}-{{ansible_distribution_release}}.yml'
+        - '{{ansible_distribution}}.yml'
+        - '{{ansible_os_family}}.yml'
+      skip: true
+      paths:
+        - '{{role_path}}/vars'
+- name: download...
+  become: yes
+  become_user: root
+  get_url:
+    url: '{{yarn_tgz_url}}'
+    dest: /tmp/{{yarn_tgz}}
+    mode: 0644
+- name: unarchive...
+  become: yes
+  become_user: root
+  unarchive:
+    src: /tmp/{{yarn_tgz}}
+    dest: '{{yarn_parent_install_dir}}'
+    creates: '{{yarn_install_dir}}'
+- name: link....
+  become: yes
+  become_user: root
+  file:
+    src: '{{yarn_install_dir}}'
+    dest: '{{yarn_link_dir}}'
+    state: link
+- name: add to login shell...
+  become: yes
+  become_user: root
+  with_items:
+    - f: yarn.sh
+      d: /etc/profile.d
+  template:
+    src: '{{item.f}}.j2'
+    dest: '{{item.d}}/{{item.f}}'
+    mode: '{{item.m|default("0644")}}'
