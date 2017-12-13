@@ -23,7 +23,7 @@
       become_user: root
       get_url:
         url: '{{yarn_tgz_url}}'
-        dest: /tmp/{{yarn_tgz}}]
+        dest: /tmp/{{yarn_tgz}}
         checksum: '{{yarn_checksum}}'
         mode: 0644
     - name: unarchive...
