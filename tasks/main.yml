@@ -30,6 +30,7 @@
       become: yes
       become_user: root
       unarchive:
+        remote_src: yes
         src: /tmp/{{yarn_tgz}}
         dest: '{{yarn_parent_install_dir}}'
         creates: '{{yarn_install_dir}}'
