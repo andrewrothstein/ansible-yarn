@@ -1,8 +1,8 @@
 ---
 # vars file for yarn
-yarn_name: yarn-v{{yarn_ver}}
-yarn_tgz: '{{yarn_name}}.tar.gz'
-yarn_tgz_url: '{{yarn_mirror}}/{{yarn_ver}}/{{yarn_tgz}}'
-yarn_install_dir: '{{yarn_parent_install_dir}}/{{yarn_name}}'
-yarn_link_dir: '{{yarn_parent_install_dir}}/yarn'
-yarn_checksum: '{{yarn_checksums[yarn_ver]}}'
+yarn_name: yarn-v{{ yarn_ver }}
+yarn_tgz: '{{ yarn_name }}.tar.gz'
+yarn_tgz_url: '{{ yarn_mirror }}/{{ yarn_ver }}/{{ yarn_tgz }}'
+yarn_install_dir: '{{ yarn_parent_install_dir }}/{{ yarn_name }}'
+yarn_link_dir: '{{ yarn_parent_install_dir }}/yarn'
+yarn_checksum: '{{ yarn_checksums[yarn_ver] }}'
