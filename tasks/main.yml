@@ -3,7 +3,7 @@
   include_vars: '{{ item }}'
   with_first_found:
     - files:
-        - '{{ ansible_distribution }}-{{ansible_distribution_release }}.yml'
+        - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
         - '{{ ansible_distribution }}.yml'
         - '{{ ansible_os_family }}.yml'
       skip: true
@@ -23,7 +23,7 @@
       become_user: root
       get_url:
         url: '{{ yarn_tgz_url }}'
-        dest: /tmp/{{yarn_tgz }}
+        dest: /tmp/{{ yarn_tgz }}
         checksum: '{{ yarn_checksum }}'
         mode: 0644
     - name: unarchive...
@@ -31,7 +31,7 @@
       become_user: root
       unarchive:
         remote_src: yes
-        src: /tmp/{{yarn_tgz }}
+        src: /tmp/{{ yarn_tgz }}
         dest: '{{ yarn_parent_install_dir }}'
         creates: '{{ yarn_install_dir }}'
   always:
@@ -39,7 +39,7 @@
       become: yes
       become_user: root
       file:
-        path: /tmp/{{yarn_tgz }}
+        path: /tmp/{{ yarn_tgz }}
         state: absent
 
 - name: link....
@@ -58,5 +58,5 @@
       d: /etc/profile.d
   template:
     src: '{{ item.f }}.j2'
-    dest: '{{ item.d }}/{{item.f }}'
+    dest: '{{ item.d }}/{{ item.f }}'
     mode: '{{ item.m | default("0644") }}'
