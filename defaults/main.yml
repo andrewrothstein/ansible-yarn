@@ -1,6 +1,6 @@
 ---
 # defaults file for yarn
-yarn_ver: '1.17.2'
+yarn_ver: '1.17.3'
 yarn_checksums:
   '1.3.2': sha256:6cfe82e530ef0837212f13e45c1565ba53f5199eec2527b85ecbcd88bf26821d
   # https://github.com/yarnpkg/yarn/releases/download/v1.5.1/yarn-v1.5.1.tar.gz
@@ -13,5 +13,7 @@ yarn_checksums:
   '1.17.1': sha256:6e952e47b49e663017b1f67b42017a4a5fe477a09e242fa1414d782ec9b84259
   # https://github.com/yarnpkg/yarn/releases/download/v1.17.2/yarn-v1.17.2.tar.gz
   '1.17.2': sha256:1cb4eb5b30adcb995198e4ff95f344d3404116b1d2bd77323a6f22dd52596fd7
+  # https://github.com/yarnpkg/yarn/releases/download/v1.17.3/yarn-v1.17.3.tar.gz
+  '1.17.3': sha256:e3835194409f1b3afa1c62ca82f561f1c29d26580c9e220c36866317e043c6f3
 yarn_mirror: https://yarnpkg.com/downloads
 yarn_parent_install_dir: /usr/local
