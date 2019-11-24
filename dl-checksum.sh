@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-VER=${1:-1.19.1}
+VER=${1:-1.19.2}
 DIR=~/Downloads
 MIRROR=https://github.com/yarnpkg/yarn/releases/download/v$VER
 FILE=yarn-v$VER.tar.gz
