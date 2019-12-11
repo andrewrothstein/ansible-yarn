@@ -1,17 +1,22 @@
 #!/usr/bin/env sh
-VER=${1:-1.19.2}
+#set -x
 DIR=~/Downloads
-MIRROR=https://github.com/yarnpkg/yarn/releases/download/v$VER
-FILE=yarn-v$VER.tar.gz
-URL=$MIRROR/$FILE
-LFILE=$DIR/$FILE
+MIRROR=https://github.com/yarnpkg/yarn/releases/download
 
-if [ ! -e $LFILE ];
-then
-    wget -q -O $LFILE $URL
-fi
+dl_ver()
+{
+    local ver=$1
+    local file=yarn-v${ver}.tar.gz
+    local url=$MIRROR/v${ver}/${file}
+    local lfile=$DIR/$file
 
-printf "  # %s\n" $URL
-printf "  '%s': sha256:%s\n" $VER `sha256sum $LFILE | awk '{print $1}'`
+    if [ ! -e $lfile ];
+    then
+        wget -q -O $lfile $url
+    fi
 
+    printf "  # %s\n" $url
+    printf "  '%s': sha256:%s\n" $ver `sha256sum $lfile | awk '{print $1}'`
+}
 
+dl_ver ${1:-1.21.1}
