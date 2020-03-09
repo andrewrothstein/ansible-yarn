@@ -1,6 +1,6 @@
 ---
 # defaults file for yarn
-yarn_ver: '1.22.0'
+yarn_ver: '1.22.1'
 yarn_mirror: https://yarnpkg.com/downloads
 yarn_parent_install_dir: /usr/local
 yarn_checksums:
@@ -27,3 +27,5 @@ yarn_checksums:
   '1.21.1': sha256:d1d9f4a0f16f5ed484e814afeb98f39b82d4728c6c8beaafb5abc99c02db6674
   # https://github.com/yarnpkg/yarn/releases/download/v1.22.0/yarn-v1.22.0.tar.gz
   '1.22.0': sha256:de8871c4e2822cba80d58c2e72366fb78567ec56e873493c9ca0cca76c60f9a5
+  # https://github.com/yarnpkg/yarn/releases/download/v1.22.1/yarn-v1.22.1.tar.gz
+  '1.22.1': sha256:3af905904932078faa8f485d97c928416b30a86dd09dcd76e746a55c7f533b72
