@@ -1,6 +1,6 @@
 andrewrothstein.yarn
 =========
-[![Build Status](https://travis-ci.org/andrewrothstein/ansible-yarn.svg?branch=master)](https://travis-ci.org/andrewrothstein/ansible-yarn)
+![Build Status](https://github.com/andrewrothstein/ansible-yarn/actions/workflows/build.yml/badge.svg)
 
 Installs [Yarn](https://yarnpkg.com/).
 
