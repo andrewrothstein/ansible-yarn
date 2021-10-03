@@ -1,4 +1,10 @@
 ---
 - hosts: all
   roles:
-    - role: '{{playbook_dir}}'
+    - role: '{{ playbook_dir }}'
+  tasks:
+    - command: /usr/local/yarn/bin/yarn --version
+      register: yarn_test_output
+    - name: yarn --version
+      debug:
+        msg: '{{ yarn_test_output.stdout }}'

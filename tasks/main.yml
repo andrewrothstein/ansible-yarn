@@ -9,7 +9,7 @@
       skip: true
       paths:
         - '{{ role_path }}/vars'
-- name: check for installation...
+- name: check for installation in {{ yarn_install_dir }}
   become: yes
   stat:
     path: '{{ yarn_install_dir }}'
@@ -18,31 +18,31 @@
 
 - when: not yarn_binary.stat.exists
   block:
-    - name: download...
+    - name: downloading {{ yarn_tgz_url }}
       become: yes
       become_user: root
       get_url:
         url: '{{ yarn_tgz_url }}'
-        dest: /tmp/{{ yarn_tgz }}
+        dest: '{{ yarn_tmp_tgz }}'
         checksum: '{{ yarn_checksum }}'
         mode: 0644
-    - name: unarchive...
+    - name: unarchiving {{ yarn_tmp_tgz }} to {{ yarn_parent_install_dir }}
       become: yes
       become_user: root
       unarchive:
         remote_src: yes
-        src: /tmp/{{ yarn_tgz }}
+        src: '{{ yarn_tmp_tgz }}'
         dest: '{{ yarn_parent_install_dir }}'
         creates: '{{ yarn_install_dir }}'
   always:
-    - name: cleaup tgz..
+    - name: rm {{ yarn_tmp_tgz }}
       become: yes
       become_user: root
       file:
-        path: /tmp/{{ yarn_tgz }}
+        path: '{{ yarn_tmp_tgz }}'
         state: absent
 
-- name: link....
+- name: linking {{ yarn_link_dir }} to {{ yarn_install_dir }}
   become: yes
   become_user: root
   file:
@@ -50,7 +50,7 @@
     dest: '{{ yarn_link_dir }}'
     state: link
 
-- name: add to login shell...
+- name: adding yarn bins to login shell PATH...
   become: yes
   become_user: root
   with_items:
