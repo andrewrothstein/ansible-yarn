@@ -10,16 +10,16 @@
       paths:
         - '{{ role_path }}/vars'
 - name: check for installation in {{ yarn_install_dir }}
-  become: yes
+  become: true
   stat:
     path: '{{ yarn_install_dir }}'
-  changed_when: False
+  changed_when: false
   register: yarn_binary
 
 - when: not yarn_binary.stat.exists
   block:
     - name: downloading {{ yarn_tgz_url }}
-      become: yes
+      become: true
       become_user: root
       get_url:
         url: '{{ yarn_tgz_url }}'
@@ -27,23 +27,23 @@
         checksum: '{{ yarn_checksum }}'
         mode: 0644
     - name: unarchiving {{ yarn_tmp_tgz }} to {{ yarn_parent_install_dir }}
-      become: yes
+      become: true
       become_user: root
       unarchive:
-        remote_src: yes
+        remote_src: true
         src: '{{ yarn_tmp_tgz }}'
         dest: '{{ yarn_parent_install_dir }}'
         creates: '{{ yarn_install_dir }}'
   always:
     - name: rm {{ yarn_tmp_tgz }}
-      become: yes
+      become: true
       become_user: root
       file:
         path: '{{ yarn_tmp_tgz }}'
         state: absent
 
 - name: linking {{ yarn_link_dir }} to {{ yarn_install_dir }}
-  become: yes
+  become: true
   become_user: root
   file:
     src: '{{ yarn_install_dir }}'
@@ -51,7 +51,7 @@
     state: link
 
 - name: adding yarn bins to login shell PATH...
-  become: yes
+  become: true
   become_user: root
   with_items:
     - f: yarn.sh
