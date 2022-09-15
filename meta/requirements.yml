@@ -2,4 +2,4 @@
 - name: andrewrothstein.unarchive-deps
   version: v1.2.4
 - name: andrewrothstein.node
-  version: v2.2.65
+  version: v2.3.0
