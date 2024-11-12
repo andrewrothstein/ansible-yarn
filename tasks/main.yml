@@ -1,10 +1,12 @@
 ---
-- include_role:
-    name: andrewrothstein.unarchive-deps
-- include_role:
+- name: Installing andrewrothstein.unarchivedeps
+  ansible.builtin.include_role:
+    name: andrewrothstein.unarchivedeps
+- name: Installing andrewrothstein.node
+  ansible.builtin.include_role:
     name: andrewrothstein.node
-- name: resolve platform specific vars
-  include_vars: '{{ item }}'
+- name: Resolve platform specific vars
+  ansible.builtin.include_vars: '{{ item }}'
   with_first_found:
     - files:
         - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
@@ -13,54 +15,45 @@
       skip: true
       paths:
         - '{{ role_path }}/vars'
-- name: check for installation in {{ yarn_install_dir }}
+- name: Check for installation in {{ yarn_install_dir }}
   become: true
-  stat:
+  ansible.builtin.stat:
     path: '{{ yarn_install_dir }}'
   changed_when: false
   register: yarn_binary
 
-- when: not yarn_binary.stat.exists
+- name: Downloading and installing yarn
+  when: not yarn_binary.stat.exists
   block:
-    - name: downloading {{ yarn_tgz_url }}
+    - name: Downloading {{ yarn_tgz_url }}
       become: true
       become_user: root
-      get_url:
+      ansible.builtin.get_url:
         url: '{{ yarn_tgz_url }}'
         dest: '{{ yarn_tmp_tgz }}'
         checksum: '{{ yarn_checksum }}'
-        mode: 0644
-    - name: unarchiving {{ yarn_tmp_tgz }} to {{ yarn_parent_install_dir }}
+        mode: '644'
+    - name: Unarchiving {{ yarn_tmp_tgz }} to {{ yarn_parent_install_dir }}
       become: true
       become_user: root
-      unarchive:
+      ansible.builtin.unarchive:
         remote_src: true
         src: '{{ yarn_tmp_tgz }}'
         dest: '{{ yarn_parent_install_dir }}'
         creates: '{{ yarn_install_dir }}'
   always:
-    - name: rm {{ yarn_tmp_tgz }}
+    - name: Rm {{ yarn_tmp_tgz }}
       become: true
       become_user: root
-      file:
+      ansible.builtin.file:
         path: '{{ yarn_tmp_tgz }}'
         state: absent
 
-- name: linking {{ yarn_link_dir }} to {{ yarn_install_dir }}
+- name: Linking {{ yarn_link_dir }} to {{ yarn_install_dir }}
   become: true
   become_user: root
-  file:
-    src: '{{ yarn_install_dir }}'
-    dest: '{{ yarn_link_dir }}'
+  with_items: '{{ yarn_exes }}'
+  ansible.builtin.file:
+    src: '{{ yarn_bin_dir }}/{{ item }}'
+    dest: '{{ yarn_link_dir }}/{{ item }}'
     state: link
-
-- name: adding yarn bins to login shell PATH...
-  become: true
-  become_user: root
-  with_items:
-    - f: yarn.sh
-      d: /etc/profile.d
-  template:
-    src: '{{ item.f }}.j2'
-    dest: '{{ item.d }}/{{ item.f }}'
-    mode: '{{ item.m | default("0644") }}'

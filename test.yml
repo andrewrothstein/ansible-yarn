@@ -1,10 +1,13 @@
 ---
-- hosts: all
+- name: Testing andrewrothstein.yarn
+  hosts: all
   roles:
     - role: '{{ playbook_dir }}'
   tasks:
-    - command: /usr/local/yarn/bin/yarn --version
+    - name: Executing command 'yarn --version'
+      ansible.builtin.command: yarn --version
+      changed_when: false
       register: yarn_test_output
-    - name: yarn --version
-      debug:
+    - name: Output from 'yarn --version'
+      ansible.builtin.debug:
         msg: '{{ yarn_test_output.stdout }}'
